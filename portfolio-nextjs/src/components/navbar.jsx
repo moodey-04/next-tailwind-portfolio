@@ -49,12 +49,17 @@ const Navbar = () => {
 
   const [nav, setNav] = useState(false);
 
+  const handleDownLoadCV = () => {
+    //todo: download cv pdf
+    console.log("download cv pdf");
+  };
+
   return (
     <div className="fixed w-full h-20 shadow-xl z-[100]">
-      <div className="flex justify-between items-center w-full h-full px-z 2xl:px-16">
+      <div className="flex items-center w-full h-full px-z 2xl:px-1 justify-between">
         <Image src="/navLogo.png" alt="" width="80" height="100" />
-        <div>
-          <ul className="hidden md:flex p-2">
+        <div className="flex items-center">
+          <ul className="hidden md:flex p-2 items-center">
             {navBars.map((item) => {
               return (
                 <Link href={item.url}>
@@ -64,9 +69,28 @@ const Navbar = () => {
                 </Link>
               );
             })}
+            <li
+              onClick={handleDownLoadCV}
+              className={
+                "ml-10 text-sm uppercase hover:border-b rounded-lg bg-slate-400 p-4 cursor-pointer mr-2"
+              }
+            >
+              DOWNLOAD CV
+            </li>
           </ul>
-          <div onClick={() => setNav(true)} className="md:hidden p-2">
+          <div
+            onClick={() => setNav(true)}
+            className="md:hidden cursor-pointer"
+          >
             <AiOutlineMenu size={25} />
+          </div>
+          <div
+            onClick={handleDownLoadCV}
+            className={
+              "md:hidden ml-4 text-sm uppercase hover:border-b rounded-lg bg-slate-400 p-4 mr-2 cursor-pointer"
+            }
+          >
+            DOWNLOAD CV
           </div>
         </div>
       </div>
