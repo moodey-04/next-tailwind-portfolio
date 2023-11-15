@@ -1,9 +1,11 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Navbar from "@/components/navbar";
-
-const inter = Inter({ subsets: ["latin"] });
+import Main from "@/components/main";
+import About from "@/components/about";
+import Skills from "@/components/skills";
+import Projects from "@/components/projects";
+import Contact from "@/components/contact";
 
 export default function Home() {
   return (
@@ -14,6 +16,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
       <Navbar />
+      <Main />
+      <About />
+      <Projects />
+      <Skills />
+      <Contact />
     </div>
   );
 }

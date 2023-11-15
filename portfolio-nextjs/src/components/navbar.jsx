@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { FaLinkedinIn, FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import Contacts from "./ui/contact";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const navBars = [
@@ -12,50 +13,54 @@ const Navbar = () => {
     },
     {
       name: "About",
-      url: "/about",
-    },
-    {
-      name: "Skills",
-      url: "/skills",
+      url: "/#about",
     },
     {
       name: "Projects",
-      url: "/projects",
+      url: "/#projects",
+    },
+    {
+      name: "Skills",
+      url: "/#skills",
     },
     {
       name: "Contact",
-      url: "/contact",
-    },
-  ];
-
-  const contacts = [
-    {
-      name: "LinkedIn",
-      icon: <FaLinkedinIn />,
-    },
-    {
-      name: "Github",
-      icon: <FaGithub />,
-    },
-    {
-      name: "Facebook",
-      icon: <FaFacebook />,
-    },
-    {
-      name: "Google",
-      icon: <FaGoogle />,
+      url: "/#contact",
     },
   ];
 
   const [nav, setNav] = useState(false);
+  const [shadow, setShadow] = useState(false);
+
+  const [navBg, setNavBg] = useState("#ecf0f3");
+  const [linkColor, setLinkColor] = useState("#1f2937");
+  const router = useRouter();
 
   const handleDownLoadCV = () => {
     //todo: download cv pdf
     console.log("download cv pdf");
   };
 
+  useEffect(() => {}, [router]);
+
+  useEffect(() => {
+    const handleShadow = () => {
+      if (window.scrollY >= 90) setShadow(true);
+      else setShadow(false);
+    };
+
+    window.addEventListener("scroll", handleShadow);
+  }, []);
+
   return (
-    <div className="fixed w-full h-20 shadow-xl z-[100]">
+    <div
+      style={{ backgroundColor: `${navBg}` }}
+      className={
+        shadow
+          ? "fixed w-full h-20 shadow-xl z-[100] ease-in duration-100"
+          : "fixed w-full h-20 z-[100] ease-out duration-100"
+      }
+    >
       <div className="flex items-center w-full h-full px-z 2xl:px-1 justify-between">
         <Image src="/navLogo.png" alt="" width="80" height="100" />
         <div className="flex items-center">
@@ -127,7 +132,7 @@ const Navbar = () => {
             <ul className="uppercase">
               {navBars.map((item) => {
                 return (
-                  <Link href={item.url}>
+                  <Link onClick={() => setNav(false)} href={item.url}>
                     <li className={"py-4 text-sm"}>{item.name}</li>
                   </Link>
                 );
@@ -138,13 +143,7 @@ const Navbar = () => {
                 Let's Connect
               </p>
               <div className="flex items-center justify-between my-4 w-full sm:w-[80%]">
-                {contacts.map((item) => {
-                  return (
-                    <div className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-500">
-                      {item.icon}
-                    </div>
-                  );
-                })}
+                <Contacts iconSize={3} />
               </div>
             </di>
           </div>
